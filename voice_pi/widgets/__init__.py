@@ -1,8 +1,8 @@
 import subprocess
 import intents
-from widget import Widget
+from widgets.widget import Widget
 
-class Registrar:
+class WidgetRegistrar:
     def __init__(self):
         self.widgets = {}
 
