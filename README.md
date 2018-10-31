@@ -1,2 +1,2 @@
-# vic
-Voice Pi Commands
+# ViC
+**V**oice P**i** **C**ommands
