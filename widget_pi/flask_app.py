@@ -4,13 +4,14 @@ import signal
 import psutil
 import logging
 
-from sanic import Sanic
+from flask import Flask
+
 from sanic.response import json
 from multiprocessing import Process
 
 # for the widgets
 import time
-from gpiozero import LED
+# from gpiozero import LED
 
 #
 # -------------------------------------------------
@@ -35,7 +36,7 @@ def signal_handler(signal, frame):
 # -------------------------------------------------
 # globals
 
-app = Sanic()
+app = Flask(__name__)
 logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 logger = logging.getLogger()
 
@@ -48,7 +49,7 @@ logger = logging.getLogger()
     '/start', methods=[
         "POST",
     ])
-async def start(request):
+def start(request):
     try:
         code = request.form.get("code")
         p = Process(target=execute_string, args=(code, ))
@@ -60,7 +61,7 @@ async def start(request):
 
 
 @app.route('/kill_all')
-async def kill_all(request):
+def kill_all(request):
     try:
         for child in psutil.Process().children():
             os.kill(child.pid, signal.SIGKILL)
