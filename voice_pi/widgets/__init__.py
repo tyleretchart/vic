@@ -29,10 +29,13 @@ class WidgetRegistrar:
         self.widgets = {}
         for name, ip in hostnames.items():
             try:
-                r = requests.post(url='http://{}:8000/widget'.format(self.ip))
-                if r.text == "True":
-                    self.widgets[hostname] = Widget(name=hostname, ip=ip)
+                print("trying it", name)
+                r = requests.get(url='http://{}:8000/widget'.format(ip))
+                print(r)
+                if r.json()["msg"] == "True":
+                    self.widgets[name] = Widget(name=hostname, ip=ip)
             except Exception as e:
+                print(e)
                 pass
 
 

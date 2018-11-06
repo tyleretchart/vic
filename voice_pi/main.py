@@ -21,11 +21,14 @@ def main():
         # scan for new widgets
         if intents.scan_new_widgets(response):
             hostnames = wregistrar.scan()
-            wregistrar.build_network(hostnames)
+            print(hostnames)
+            wregistrar.rebuild_network(hostnames)
             if wregistrar.widgets:
                 speaker.speak("We have scanned your network and found these widgets")
                 for hostname in wregistrar.widgets.keys():
                     speaker.speak(hostname)
+            else:
+                speaker.speak("Sorry, there are no widgets on the network.")
 
             # widget_not_found = True
             # for name, ip in hostnames.items():
