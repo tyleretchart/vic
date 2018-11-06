@@ -57,14 +57,14 @@ def main():
 
         # send command
         elif intents.send_command(response):
-            response = speak.prompt("Which command?\n> ")
+            response = speaker.prompt("Which command?\n> ")
             try:
                 command = command_builder.commands[response]
             except Exception as e:
                 speaker.speak("Sorry, that isn't a valid command.")
                 continue
 
-            response = speak.prompt("Which widget?\n> ")
+            response = speaker.prompt("Which widget?\n> ")
             try:
                 widget = wregistrar.widgets[response]
             except Exception as e:
