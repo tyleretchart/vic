@@ -71,6 +71,11 @@ async def kill_all(request):
         return json({"error": True, "msg": str(e)})
 
 
+@app.route('/widget')
+async def widget(request):
+    return "True"
+
+
 #
 # -------------------------------------------------
 # main

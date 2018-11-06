@@ -1,5 +1,6 @@
-import subprocess
 import intents
+import requests
+import subprocess
 from widgets.widget import Widget
 
 class WidgetRegistrar:
@@ -19,10 +20,21 @@ class WidgetRegistrar:
             print("ERROR", e)
 
         # remove any known widgets
-        for known in self.widgets.keys():
-            if known in hostnames:
-                del hostnames[known]
+        # for known in self.widgets.keys():
+        #     if known in hostnames:
+        #         del hostnames[known]
         return hostnames
+
+    def rebuild_network(self, hostnames):
+        self.widgets = {}
+        for name, ip in hostnames.items():
+            try:
+                r = requests.post(url='http://{}:8000/widget'.format(self.ip))
+                if r.text == "True":
+                    self.widgets[hostname] = Widget(name=hostname, ip=ip)
+            except Exception as e:
+                pass
+
 
     def add_widget(self, hostname, ip):
         self.widgets[hostname] = Widget(name=hostname, ip=ip)

@@ -21,18 +21,24 @@ def main():
         # scan for new widgets
         if intents.scan_new_widgets(response):
             hostnames = wregistrar.scan()
-            widget_not_found = True
-            for name, ip in hostnames.items():
-                response = speaker.prompt(
-                    "Is {} the widget you are looking for?\n> ".format(name))
-                if intents.yes(response):
-                    wregistrar.add_widget(name, ip)
-                    speaker.speak(
-                        "Great! {} has been registered\n".format(name))
-                    widget_not_found = False
-                    break
-            if widget_not_found:
-                speaker.speak("Sorry, we couldn't find your widget...\n")
+            wregistrar.build_network(hostnames)
+            if wregistrar.widgets:
+                speaker.speak("We have scanned your network and found these widgets")
+                for hostname in wregistrar.widgets.keys():
+                    speaker.speak(hostname)
+
+            # widget_not_found = True
+            # for name, ip in hostnames.items():
+            #     response = speaker.prompt(
+            #         "Is {} the widget you are looking for?\n> ".format(name))
+            #     if intents.yes(response):
+            #         wregistrar.add_widget(name, ip)
+            #         speaker.speak(
+            #             "Great! {} has been registered\n".format(name))
+            #         widget_not_found = False
+            #         break
+            # if widget_not_found:
+            #     speaker.speak("Sorry, we couldn't find your widget...\n")
 
         # ask to hear current widgets
         elif intents.share_current_widgets(response):
