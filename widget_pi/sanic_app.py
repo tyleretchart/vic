@@ -73,7 +73,7 @@ async def kill_all(request):
 
 @app.route('/widget')
 async def widget(request):
-    return "True"
+    return json({"msg": "True"})
 
 
 #
