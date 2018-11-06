@@ -45,6 +45,12 @@ def build_new_command(phrase):
     ]
     return __determine_intent(patterns, phrase)
 
+def send_command(phrase):
+    patterns = [
+        r"send command",
+    ]
+    return __determine_intent(patterns, phrase)
+
 #
 # ----------------------------------------------------------
 # intent and return blocks

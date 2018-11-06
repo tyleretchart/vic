@@ -64,7 +64,6 @@ class CommandBuilder:
                     self.speaker.speak("Sorry, not a valid command... try again!")
 
         # save command
-
         self.speaker.speak("Done building command!")
         self.speaker.speak("Here is your command!\n---------------------------")
         self.speaker.speak(new_command.export_code("18"))

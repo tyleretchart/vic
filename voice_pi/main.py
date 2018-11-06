@@ -53,7 +53,31 @@ def main():
 
         # build new command
         elif intents.build_new_command(response):
-            command = command_builder.build_command()
+            command_builder.build_command()
+
+        # send command
+        elif intents.send_command(response):
+            response = speak.prompt("Which command?\n> ")
+            try:
+                command = command_builder.commands[response]
+            except Exception as e:
+                speaker.speak("Sorry, that isn't a valid command.")
+                continue
+
+            response = speak.prompt("Which widget?\n> ")
+            try:
+                widget = wregistrar.widgets[response]
+            except Exception as e:
+                speaker.speak("Sorry, that isn't a valid widget.")
+                continue
+            
+            response = speak.prompt("Which pin?\n> ")
+            pin = 18
+            response = widget.send_command(command, pin)
+            speaker.speak(response)
+
+
+
 
         else:
             speaker.speak(
