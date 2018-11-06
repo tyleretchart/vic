@@ -30,19 +30,6 @@ def main():
             else:
                 speaker.speak("Sorry, there are no widgets on the network.")
 
-            # widget_not_found = True
-            # for name, ip in hostnames.items():
-            #     response = speaker.prompt(
-            #         "Is {} the widget you are looking for?\n> ".format(name))
-            #     if intents.yes(response):
-            #         wregistrar.add_widget(name, ip)
-            #         speaker.speak(
-            #             "Great! {} has been registered\n".format(name))
-            #         widget_not_found = False
-            #         break
-            # if widget_not_found:
-            #     speaker.speak("Sorry, we couldn't find your widget...\n")
-
         # ask to hear current widgets
         elif intents.share_current_widgets(response):
             number_display = "Sure! You have {} widget".format(
@@ -81,12 +68,13 @@ def main():
                 continue
             
             response = speaker.prompt("Which pin?\n> ")
-            pin = 18
+            try:
+                pin = int(response)
+            except Exception as e:
+                speaker.speak("Sorry, that isn't a valid pin.")
+                continue
             response = widget.send_command(command, pin)
             speaker.speak(response)
-
-
-
 
         else:
             speaker.speak(

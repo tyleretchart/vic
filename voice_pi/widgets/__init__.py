@@ -17,26 +17,24 @@ class WidgetRegistrar:
                 if hostname is not None:
                     hostnames[hostname] = ip
         except Exception as e:
-            print("ERROR", e)
-
-        # remove any known widgets
-        # for known in self.widgets.keys():
-        #     if known in hostnames:
-        #         del hostnames[known]
+            pass
         return hostnames
 
     def rebuild_network(self, hostnames):
         self.widgets = {}
         for name, ip in hostnames.items():
             try:
-                print("trying it", name)
                 r = requests.get(url='http://{}:8000/widget'.format(ip))
-                print(r)
                 if r.json()["msg"] == "True":
                     self.widgets[name] = Widget(name=name, ip=ip)
             except Exception as e:
-                print(e)
                 pass
+
+    def remove_known_widgets(self, hostnames):
+        for known in self.widgets.keys():
+            if known in hostnames:
+                del hostnames[known]
+        return hostnames
 
 
     def add_widget(self, hostname, ip):

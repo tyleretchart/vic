@@ -9,4 +9,4 @@ class Widget:
     def send_command(self, command, pin):
         code = command.export_code(pin, include_imports=False)
         r = requests.post(url='http://{}:8000/start'.format(self.ip), data={"code": code})
-        return r.text
+        return r.json()["msg"]
