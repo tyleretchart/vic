@@ -10,7 +10,7 @@ from multiprocessing import Process
 
 # for the widgets
 import time
-# from gpiozero import LED
+from gpiozero import LED
 
 #
 # -------------------------------------------------

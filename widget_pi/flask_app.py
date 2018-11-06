@@ -4,14 +4,13 @@ import signal
 import psutil
 import logging
 
-from flask import Flask
+from flask import Flask, request
 
-from sanic.response import json
 from multiprocessing import Process
 
 # for the widgets
 import time
-# from gpiozero import LED
+from gpiozero import LED
 
 #
 # -------------------------------------------------
@@ -49,27 +48,33 @@ logger = logging.getLogger()
     '/start', methods=[
         "POST",
     ])
-def start(request):
+def start():
     try:
         code = request.form.get("code")
-        p = Process(target=execute_string, args=(code, ))
-        p.start()
-        return json({"error": False, "msg": p.pid})
+        execute_string(code)
+        # p = Process(target=execute_string, args=(code, ))
+        # p.start()
+        return "done"
+        # return str(p.pid)
+        # return json({"error": False, "msg": p.pid})
     except Exception as e:
         logger.warning("EXCEPTION: {}".format(e))
-        return json({"error": True, "msg": str(e)})
+        return str(e)
+        # return json({"error": True, "msg": str(e)})
 
 
 @app.route('/kill_all')
-def kill_all(request):
+def kill_all():
     try:
         for child in psutil.Process().children():
             os.kill(child.pid, signal.SIGKILL)
             logger.info("CHILD KILLED: {}".format(child))
-        return json({"error": False, "msg": ""})
+        return ""
+        # return json({"error": False, "msg": ""})
     except Exception as e:
         logger.warning("EXCEPTION: {}".format(e))
-        return json({"error": True, "msg": str(e)})
+        return str(e)
+        # return json({"error": True, "msg": str(e)})
 
 
 #
