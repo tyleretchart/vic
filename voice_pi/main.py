@@ -71,7 +71,7 @@ def main():
                 speaker.speak("Sorry, that isn't a valid widget.")
                 continue
             
-            response = speak.prompt("Which pin?\n> ")
+            response = speaker.prompt("Which pin?\n> ")
             pin = 18
             response = widget.send_command(command, pin)
             speaker.speak(response)
