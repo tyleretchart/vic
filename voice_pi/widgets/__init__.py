@@ -33,7 +33,7 @@ class WidgetRegistrar:
                 r = requests.get(url='http://{}:8000/widget'.format(ip))
                 print(r)
                 if r.json()["msg"] == "True":
-                    self.widgets[name] = Widget(name=hostname, ip=ip)
+                    self.widgets[name] = Widget(name=name, ip=ip)
             except Exception as e:
                 print(e)
                 pass
