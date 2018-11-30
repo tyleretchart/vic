@@ -15,7 +15,7 @@ class Speaker:
 
     def prompt(self, string):
         self.__say(string)
-        if listen:
+        if self.listen:
             print(string)
             msg = record_voice()
             print("You said:", msg)

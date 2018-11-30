@@ -4,7 +4,7 @@ import requests
 from serializer import Serializer
 from gpiozero import Button, LED
 
-def record_voice(self):
+def record_voice():
     # globals
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
