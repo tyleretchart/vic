@@ -8,7 +8,7 @@ from speaker import Speaker
 from commands import CommandBuilder
 from widgets import WidgetRegistrar
 
-speaker = Speaker(out_loud=False)
+speaker = Speaker(out_loud=False, listen=False)
 command_builder = CommandBuilder(speaker=speaker)
 wregistrar = WidgetRegistrar()
 

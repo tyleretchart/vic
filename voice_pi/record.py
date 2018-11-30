@@ -2,27 +2,33 @@ import wave
 import pyaudio
 import requests
 from serializer import Serializer
+from gpiozero import Button, LED
 
-
-def record(self):
+def record_voice(self):
     # globals
     FORMAT = pyaudio.paInt16
     CHANNELS = 1
     RATE = 44100
     CHUNK = 1024
     RECORD_SECONDS = 3
+    button = Button(27)
+    led = LED(18)
 
     # start recording
     audio = pyaudio.PyAudio()
     stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
-    print("recording...")
+    # print("recording...")
     frames = []
 
     # record for RECORD_SECONDS
-    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+    button.wait_for_press()
+    led.on()
+    while button.is_pressed:
+    # for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
         data = stream.read(CHUNK, exception_on_overflow=False)
         frames.append(data)
-    print("finished recording")
+    led.off()
+    # print("finished recording")
 
     # stop Recording
     stream.stop_stream()

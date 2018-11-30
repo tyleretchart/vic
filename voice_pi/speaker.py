@@ -1,9 +1,11 @@
 import pyttsx3
+from record import record_voice
 
 class Speaker:
 
-    def __init__(self, out_loud):
+    def __init__(self, out_loud, listen):
         self.out_loud = out_loud
+        self.listen = listen
         if self.out_loud:
             self.engine = pyttsx3.init()
 
@@ -13,7 +15,13 @@ class Speaker:
 
     def prompt(self, string):
         self.__say(string)
-        return input(string)
+        if listen:
+            print(string)
+            msg = record_voice()
+            print("You said:", msg)
+            return msg
+        else:
+            return input(string)
 
     def __say(self, string):
         if self.out_loud:
