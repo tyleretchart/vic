@@ -1,19 +1,45 @@
-import alsaaudio, wave, numpy
-# https://stackoverflow.com/questions/23190348/alsaaudio-library-not-working
+import wave
+import pyaudio
+import requests
+from serializer import Serializer
 
-inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE)
-inp.setchannels(1)
-inp.setrate(44100)
-inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-inp.setperiodsize(1024)
 
-w = wave.open('test.wav', 'w')
-w.setnchannels(1)
-w.setsampwidth(2)
-w.setframerate(44100)
+def record(self):
+    # globals
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 44100
+    CHUNK = 1024
+    RECORD_SECONDS = 3
 
-while True:
-    l, data = inp.read()
-    a = numpy.fromstring(data, dtype='int16')
-    print(numpy.abs(a).mean())
-    w.writeframes(data)
+    # start recording
+    audio = pyaudio.PyAudio()
+    stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
+    print("recording...")
+    frames = []
+
+    # record for RECORD_SECONDS
+    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        data = stream.read(CHUNK, exception_on_overflow=False)
+        frames.append(data)
+    print("finished recording")
+
+    # stop Recording
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+
+    # write your new .wav file with built in Python 3 Wave module
+    waveFile = wave.open("out.wav", 'wb')
+    waveFile.setnchannels(CHANNELS)
+    waveFile.setsampwidth(audio.get_sample_size(FORMAT))
+    waveFile.setframerate(RATE)
+    waveFile.writeframes(b''.join(frames))
+    waveFile.close()
+
+    # stt
+    s = Serializer()
+    with open("out.wav", "rb") as fin:
+        r = requests.post(url="http://192.168.1.172:8000/transcribe", data={"audio": s.serialize(fin.read())})
+    print(r.json())
+    return r.json()["msg"]

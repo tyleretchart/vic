@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*/deepspeech_stuff
+*/models
+*/tmp.wav
+*/out.wav
 
 # C extensions
 *.so
