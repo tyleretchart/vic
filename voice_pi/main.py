@@ -76,6 +76,10 @@ def main():
             response = widget.send_command(command, pin)
             speaker.speak(response)
 
+        # random phrase to show off voice
+        elif intents.party(response):
+            speaker.speak("It's party time!")
+
         else:
             speaker.speak(
                 "I didn't understand your command, please try again!\n")

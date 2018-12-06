@@ -51,6 +51,12 @@ def send_command(phrase):
     ]
     return __determine_intent(patterns, phrase)
 
+def party(phrase):
+    patterns = [
+        r"party",
+    ]
+    return __determine_intent(patterns, phrase)
+
 #
 # ----------------------------------------------------------
 # intent and return blocks
