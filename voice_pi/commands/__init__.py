@@ -44,8 +44,6 @@ class CommandBuilder:
                 new_command.add_turn_on()
             elif response == "turn off":
                 new_command.add_turn_off()
-            elif response == "turn off":
-                new_command.add_turn_off()
             elif response == "sleep":
                 how_long = self.speaker.prompt("For how long?\n> ")
                 new_command.add_sleep(how_long)
