@@ -4,7 +4,7 @@ chardet==3.0.4
 httptools==0.0.11
 idna==2.7
 multidict==4.4.2
-psutil==5.4.8
+psutil==5.6.6
 python-nmap==0.6.1
 pyttsx3==2.7
 requests==2.20.0
